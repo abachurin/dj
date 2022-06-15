@@ -8,4 +8,3 @@ class C1(models.Model):
 
     def __str__(self):
         return self.text
-
