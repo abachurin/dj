@@ -4,14 +4,13 @@
 
 {% block content %}
     <div class="container">
-        <form method="POST" action="" enctype="multipart/form-data">
+        <form method="POST" action="" enctype="multipart/form-data" class="col-sm-4 offset-4 py-5 my-5">
+            <h3>Upload an image!</h3>
             {% csrf_token %}
             {{ form.as_p }}
             <div>
-                <button type="submit">Submit view</button>
+                <button type="submit" class="btn-lg btn-success">Submit view</button>
             </div>
         </form>
-        <hr>
-        <a href="{% url 'main:index' %}">&lAarr; Go back</a>
     </div>
 {% endblock %}

@@ -3,8 +3,10 @@
 {% block title %}Detail view{% endblock %}
 
 {% block content %}
-    <a href="{% url 'main:index' %}">&lAarr; Go back</a>
-    <h3>{{ object.text }}</h3>
-    <h3>Image</h3>
-    <img src="{{ object.image.url }}" width="auto" height="80%" alt="">
+    <div class="row">
+        <div class="col-sm-10 pt-3 col-centered">
+            {{ object.text }} <br>
+            <img src="{{ object.image.url }}" class="img-fluid rounded-1">
+        </div>
+    </div>
 {% endblock %}
