@@ -5,7 +5,7 @@ name: CI-CD-to-AWS-EB
 env:
   S3-BUCKET: "deploy-for-dj"
   APP-NAME: "dj"
-  ENV-NAME: "Dj-env"
+  ENV-NAME: "Dj-env-2"
   PACKAGE-DEPLOY: "image-storage-${{ github.sha }}.zip"
   AWS-REGION: "eu-west-1"
 
