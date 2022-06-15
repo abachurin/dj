@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 IS_LOCAL = os.environ.get('S3_URL', 'local')
 if IS_LOCAL == 'local':
     with open(os.path.join(BASE_DIR, 'dj', 'secret.json'), 'r') as f:
-        SECRET_KEY = json.load(f)
+        SECRET_KEY = json.load(f)['DJANGO_KEY']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -49,12 +49,7 @@ elif IS_LOCAL == 'AWS':
             'PORT': os.environ['RDS_PORT'],
         }
     }
-    ALLOWED_HOSTS = [
-        '127.0.0.1',
-        'localhost',
-        '.amazonaws.com',
-        '.elasticbeanstalk.com'
-    ]
+    ALLOWED_HOSTS = ['*']
     DEBUG = True
 
 else:
