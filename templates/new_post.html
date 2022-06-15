@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Add post{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div>
+                <button type="submit">Submit view</button>
+            </div>
+        </form>
+        <hr>
+        <a href="{% url 'main:index' %}">&lAarr; Go back</a>
+    </div>
+{% endblock %}

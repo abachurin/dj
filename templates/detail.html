@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Detail view{% endblock %}
+
+{% block content %}
+    <a href="{% url 'main:index' %}">&lAarr; Go back</a>
+    <h3>{{ object.text }}</h3>
+    <h3>Image</h3>
+    <img src="{{ object.image.url }}" width="auto" height="80%" alt="">
+{% endblock %}

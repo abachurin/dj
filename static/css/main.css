@@ -1,0 +1,11 @@
+.first_line {
+    position: absolute;
+    left: calc(50% - 150px);
+    top: calc(50% - 150px);
+    width: 300px;
+    height: 300px;
+    background: var(--bs-white);
+    color: var(--bs-blue);
+    text-align: center;
+    border-radius: 1rem;
+}
