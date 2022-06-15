@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 import json
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,15 +24,42 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+IS_LOCAL = os.environ.get('S3_URL', 'local')
+if IS_LOCAL == 'local':
+    with open(os.path.join(BASE_DIR, 'dj', 'secret.json'), 'r') as f:
+        SECRET_KEY = json.load(f)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+    ALLOWED_HOSTS = ['0.0.0.0']
+    DEBUG = True
 
-with open(os.path.join(BASE_DIR, 'dj', 'secret.json'), 'r') as f:
-    SECRET_KEY = json.load(f)
+elif IS_LOCAL == 'AWS':
+    SECRET_KEY = os.environ.get('DJANGO_KEY')
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
+    }
+    ALLOWED_HOSTS = [
+        '127.0.0.1',
+        'localhost',
+        '.amazonaws.com',
+        '.elasticbeanstalk.com'
+    ]
+    DEBUG = False
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['0.0.0.0']
-
+else:
+    print('Unknown environment!')
+    sys.exit()
 
 # Application definition
 
@@ -77,18 +105,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'dj.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
